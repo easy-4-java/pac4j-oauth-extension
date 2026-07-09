@@ -12,7 +12,7 @@ import com.github.scribejava.core.model.Token;
 /**
  * http://www.oschina.net/openapi/docs/openapi_user
  */
-public class OschinaProfileDefinition extends OAuthProfileDefinition {
+public class OschinaProfileDefinition extends OAuthProfileDefinition<OschinaProfile, Token, OAuthConfiguration> {
 
 	public static final String PROFILE_URL = "https://www.oschina.net/action/openapi/user?access_token=%s";
     public static final String ID = "id";

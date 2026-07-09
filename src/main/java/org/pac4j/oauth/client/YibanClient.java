@@ -61,8 +61,8 @@ public class YibanClient extends OAuth20Client {
     }
     
     @Override
-    protected void internalInit(final boolean forceReinit) {
-        super.internalInit(forceReinit);
+    protected void clientInit() {
+        super.clientInit();
         configuration.setApi(YibanApi20.instance());
         configuration.setScope(getOAuthScope());
         configuration.setProfileDefinition(new YibanProfileDefinition());

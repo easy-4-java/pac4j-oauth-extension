@@ -12,7 +12,7 @@ import com.github.scribejava.core.model.Token;
 /**
  * http://developer.baidu.com/wiki/index.php?title=docs/oauth/rest/file_data_apis_list
  */
-public class BaiduProfileDefinition extends OAuthProfileDefinition  {
+public class BaiduProfileDefinition extends OAuthProfileDefinition<BaiduProfile, Token, OAuthConfiguration>  {
 
 	public static final String PROFILE_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getInfo?access_token=%s";
 

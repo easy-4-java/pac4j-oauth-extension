@@ -34,7 +34,7 @@ import com.github.scribejava.core.model.Token;
  *
  * @author 		： <a href="https://github.com/hiwepy">wandl</a>
  */
-public class YibanProfileDefinition extends OAuthProfileDefinition {
+public class YibanProfileDefinition extends OAuthProfileDefinition<YibanProfile, Token, OAuthConfiguration> {
 
     public static final String PROFILE_ME_URL = "https://openapi.yiban.cn/user/me?access_token=%s";
 
@@ -235,7 +235,7 @@ public class YibanProfileDefinition extends OAuthProfileDefinition {
         final YibanProfile profile = new YibanProfile();
         final JsonNode json = JsonHelper.getFirstNode(body);
         if (json != null) {
-            profile.setId(ProfileHelper.sanitizeIdentifier(JsonHelper.getElement(json, ID)));
+            profile.setId(ProfileHelper.sanitizeIdentifier(profile, JsonHelper.getElement(json, ID)));
             for (final String attribute : getPrimaryAttributes()) {
                 convertAndAdd(profile, PROFILE_ATTRIBUTE, attribute, JsonHelper.getElement(json, attribute));
             }
