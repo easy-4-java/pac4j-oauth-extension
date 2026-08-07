@@ -14,5 +14,5 @@ public class OsChinaExample {
 				.responseType("code").build(OschinaApi20.instance());
 		System.out.println(oschina.getAuthorizationUrl());
 	}
-	
+
 }

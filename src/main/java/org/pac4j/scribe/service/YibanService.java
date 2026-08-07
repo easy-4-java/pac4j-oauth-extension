@@ -37,7 +37,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
  * @author [@Loong Wan](https://github.com/loong10k)
  */
 public class YibanService extends OAuth20Service {
-    
+
     private final String apiKey;
     private final String apiSecrect;
 
@@ -54,12 +54,12 @@ public class YibanService extends OAuth20Service {
      * @param userAgent the user agent
      * @param httpClientConfig the HTTP client configuration
      * @param httpClient  the HTTP client
-     * 
+     *
      */
     public YibanService(DefaultApi20 api, String apiKey, String apiSecret, String callback, String scope,
             String responseType, OutputStream debugStream, String userAgent, HttpClientConfig httpClientConfig,
             HttpClient httpClient) {
-    	super(api, apiKey, apiSecret, callback, scope, responseType, debugStream, userAgent, httpClientConfig, httpClient);
+	super(api, apiKey, apiSecret, callback, scope, responseType, debugStream, userAgent, httpClientConfig, httpClient);
         this.apiKey = apiKey;
         this.apiSecrect = apiSecret;
     }

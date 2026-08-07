@@ -42,14 +42,14 @@ public class YibanJsonExtractor extends OAuth2AccessTokenJsonExtractor {
         return YibanJsonExtractor.InstanceHolder.INSTANCE;
     }
 
-    
+
     @Override
     protected OAuth2AccessToken createToken(String accessToken, String tokenType, Integer expiresIn,
-    		String refreshToken, String scope, JsonNode response, String rawResponse) {
-    	 String userid = extractRequiredParameter(response, USERID_REGEX_PATTERN, rawResponse).asText();
+		String refreshToken, String scope, JsonNode response, String rawResponse) {
+	 String userid = extractRequiredParameter(response, USERID_REGEX_PATTERN, rawResponse).asText();
          String unionid = extractRequiredParameter(response, EXPIRES_REGEX_PATTERN, rawResponse).asText();;
          YibanToken token = new YibanToken(accessToken, tokenType, expiresIn, refreshToken, scope, rawResponse, userid);
          return token;
     }
-     
+
 }

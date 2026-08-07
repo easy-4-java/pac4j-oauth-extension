@@ -8,7 +8,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.Verb;
 
 public class OschinaApi20 extends DefaultApi20 {
-	
+
 	public static final String AUTHORIZE_URL = "http://www.oschina.net/action/oauth2/authorize";
 	public static final String ACCESS_TOKEN_URL = "http://www.oschina.net/action/openapi/token";
 
@@ -32,7 +32,7 @@ public class OschinaApi20 extends DefaultApi20 {
 	protected String getAuthorizationBaseUrl() {
 		return AUTHORIZE_URL;
 	}
-    
+
     @Override
     public String getAccessTokenEndpoint() {
         return ACCESS_TOKEN_URL;
@@ -42,5 +42,5 @@ public class OschinaApi20 extends DefaultApi20 {
     public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
         return OAuth2AccessTokenExtractor.instance();
     }
-	
+
 }

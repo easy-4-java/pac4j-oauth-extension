@@ -25,7 +25,7 @@ public class OschinaProfile extends OAuth20Profile {
 
     @Override
     public String getFirstName() {
-    	return (String) getAttribute(OschinaProfileDefinition.NAME);
+	return (String) getAttribute(OschinaProfileDefinition.NAME);
     }
 
     @Override
