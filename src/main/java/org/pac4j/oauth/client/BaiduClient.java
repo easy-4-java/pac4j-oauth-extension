@@ -1,11 +1,11 @@
 package org.pac4j.oauth.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.pac4j.oauth.profile.baidu.BaiduProfileCreator;
 import org.pac4j.oauth.profile.baidu.BaiduProfileDefinition;
 import org.pac4j.scribe.builder.api.BaiduApi20;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  */
@@ -39,12 +39,11 @@ public class BaiduClient extends OAuth20Client {
 
     @Override
     protected void clientInit() {
-        super.clientInit();
         configuration.setApi(BaiduApi20.instance());
         configuration.setScope(getOAuthScope());
         configuration.setProfileDefinition(new BaiduProfileDefinition());
         configuration.setWithState(true);
-        defaultProfileCreator(new BaiduProfileCreator(configuration, this));
+        setProfileCreator(new BaiduProfileCreator(configuration, this));
     }
 
     protected String getOAuthScope() {
@@ -75,8 +74,9 @@ public class BaiduClient extends OAuth20Client {
     }
 
     public void addScope(BaiduScope scopes) {
-        if (this.scopes == null)
+        if (this.scopes == null) {
             this.scopes = new ArrayList<>();
+        }
         this.scopes.add(scopes);
     }
 

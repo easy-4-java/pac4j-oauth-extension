@@ -54,7 +54,7 @@ public class YibanApi20 extends DefaultApi20 {
     private static final String REFRESH_TOKEN_ENDPOINT = "https://openapi.yiban.cn/oauth/reset_token";
     // https://open.yiban.cn/wiki/index.php?page=oauth/access_token
     private static final String ACCESS_TOKEN_ENDPOINT = "https://openapi.yiban.cn/oauth/access_token";
-   
+
     protected YibanApi20() {
 	}
 
@@ -87,7 +87,7 @@ public class YibanApi20 extends DefaultApi20 {
         String authorizationUrl = super.getAuthorizationUrl(responseType, apiKey, callback, scope, state, additionalParams);
         authorizationUrl = authorizationUrl.replace(OAuthConstants.CLIENT_ID, APPID);
         if (scope != null && scope.contains(
-        		YibanClient.YibanScope.SNSAPI_LOGIN.toString().toLowerCase())) {
+		YibanClient.YibanScope.SNSAPI_LOGIN.toString().toLowerCase())) {
             authorizationUrl = AUTHORIZE_ENDPOINT + authorizationUrl;
         } else {
             authorizationUrl = AUTHORIZE_ENDPOINT + authorizationUrl;
@@ -99,7 +99,7 @@ public class YibanApi20 extends DefaultApi20 {
     public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
         return YibanJsonExtractor.instance();
     }
-	
+
 	@Override
 	public OAuth20Service createService(String apiKey, String apiSecret, String callback, String defaultScope,
 			String responseType, OutputStream debugStream, String userAgent, HttpClientConfig httpClientConfig,

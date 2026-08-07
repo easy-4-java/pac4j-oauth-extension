@@ -32,7 +32,7 @@ import com.github.scribejava.core.model.Token;
  * @author [@Loong Wan](https://github.com/loong10k)
  */
 public class YibanProfileCreator extends OAuth20ProfileCreator {
-	
+
     public YibanProfileCreator(OAuth20Configuration configuration,
                                 IndirectClient client) {
         super(configuration, client);
