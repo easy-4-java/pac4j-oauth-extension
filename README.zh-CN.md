@@ -4,12 +4,12 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange)](https://github.com/easy-4-java/pac4j-oauth-extension) [![License](https://img.shields.io/badge/license-Apache%202.0-green)](./LICENSE)
 
-pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 scribe API 绑定（基于 fastjson）
+pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 scribe API 绑定
 
 > **当前分支**：`feature/3.0.x`
-> **版本**：`3.0.x.x.20260630-SNAPSHOT`
-> **JDK 基线**：8
-> **项目状态**：维护中（1.0.x 线）。尚未发布 Maven Central；制品通过 Aliyun Maven 仓库与 GitHub Releases 分发。
+> **版本**：`3.0.x.20260630-SNAPSHOT`
+> **JDK 基线**：21
+> **项目状态**：活跃维护（3.0.x 线）。制品通过阿里云 Maven 仓库分发。
 
 ## 目录
 
@@ -29,12 +29,18 @@ pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 
 
 ### 1.1 是什么
 
-**pac4j-oauth-extension** 在 pac4j（4.5.7）的 OAuth 能力之上扩展百度、OSChina 与易班（腾讯）的 OAuth 2.0 客户端，并配套档案、creator / definition 与 scribe API 绑定。本线使用 **fastjson**（2.0.62）处理档案创建中的 JSON。
+**pac4j-oauth-extension** 在 pac4j 的 OAuth 支持（本线 pac4j 6.1.0）之上扩展面向国内与俄语生态服务商的 OAuth 2.0 客户端：
+
+- **百度**——`BaiduClient` + `BaiduProfile`（昵称、用户名、头像、肖像、性别、生日等）；
+- **OSChina**——`OschinaClient` + `OschinaProfile`；
+- **易班**（腾讯）——`YibanClient` + `YibanProfile`，并配套自定义 scribe API（`YibanApi20`、`YibanToken`、`YibanService`、`YibanJsonExtractor`）。
+
+每家服务商均包含档案 creator / definition 与 scribe API 绑定（`BaiduApi20`、`OschinaApi20`）。
 
 ### 1.2 不是什么
 
-- 不是 pac4j 的分支——它构建于 `pac4j-oauth` / `pac4j-core` / `pac4j-config` / `pac4j-http` 之上。
-- 不是完整的 OAuth 框架——仅覆盖上述三家服务商。
+- 不是 pac4j 的分支——它构建于 `pac4j-oauth` / `pac4j-core` 之上。
+- 不是完整的 OAuth 框架——本线仅覆盖上述三家服务商。
 
 ### 1.3 典型使用场景
 
@@ -51,10 +57,11 @@ pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 
 | 能力 | 状态 | 说明 |
 |---|:---:|---|
 | 百度 OAuth 2.0 客户端 | 可用 | `BaiduClient`（`OAuth20Client`），scopes：`SNSAPI_LOGIN`、`SNSAPI_BASE`、`SNSAPI_USERINFO` |
-| 百度档案 | 可用 | `BaiduProfile`（`getDisplayName`、`getUsername`、`getPictureUrl`、`getPortraitLargeUrl`、`getGender`、`getBirthday` 等）、`BaiduGenderConverter`、基于 fastjson 的 `BaiduProfileCreator` |
+| 百度档案 | 可用 | `BaiduProfile`：`getDisplayName`、`getUsername`、`getPictureUrl`、`getPortraitLargeUrl`、`getGender`、`getBirthday`、`getMarriage`、`getBlood`、`getFigure`、`getConstellation`、`getEducation`、`getUserdetail` 等；`BaiduGenderConverter` |
 | OSChina 客户端 + 档案 | 可用 | `OschinaClient`、`OschinaProfile`、creator + definition |
 | 易班客户端 + 档案 | 可用 | `YibanClient`、`YibanProfile`、creator + definition |
 | Scribe API 绑定 | 可用 | `BaiduApi20`、`OschinaApi20`、`YibanApi20`、`YibanService`、`YibanToken`、`YibanJsonExtractor` |
+| 工具类 | 可用 | `MyCommonHelper` |
 
 <a id="3-requirements--compatibility"></a>
 ## 3. 运行要求与兼容性
@@ -63,17 +70,16 @@ pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 
 |---|---:|---|
 | JDK | 21+ | 由 `maven-enforcer-plugin` 强制校验 |
 | Maven | 3.0+ | Enforcer 下限 |
-| pac4j-core / config / http / oauth | 4.5.7 | 固定版本 |
-| fastjson | 2.0.62 | JSON 处理 |
+| pac4j-core / config / http / oauth | 6.1.0 | 固定版本 |
 | SLF4J | 2.0.18 | 日志门面 |
 
 版本线矩阵：
 
 | 版本线 | 分支 | JDK | 版本模式 | 用途 |
 |---|---|---:|---|---|
-| 1.0.x | `feature/3.0.x`（当前分支） | 8 | `1.0.x.*` | 存量项目、Boot 2.x Starter 线 |
+| 1.0.x | `feature/1.0.x` | 8 | `1.0.x.*` | 存量项目、Boot 2.x Starter 线 |
 | 2.0.x | `feature/2.0.x` | 17 | `2.0.x.*` | JDK 17 线 |
-| 3.0.x | `feature/3.0.x` | 21 | `3.0.x.*` | 新项目 |
+| 3.0.x | `feature/3.0.x`（当前分支） | 21 | `3.0.x.*` | 新项目 |
 
 <a id="4-architecture--modules"></a>
 ## 4. 架构与模块
@@ -88,7 +94,7 @@ pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 
 |          YibanClient（OAuth20Client）     |
 | 档案     BaiduProfile / OschinaProfile /  |
 |          YibanProfile + creators +        |
-|          definitions（fastjson）          |
+|          definitions                      |
 | Scribe   BaiduApi20 / OschinaApi20 /      |
 |          YibanApi20 + YibanService /      |
 |          YibanToken / YibanJsonExtractor  |
@@ -108,6 +114,7 @@ pac4j OAuth 扩展：百度、OSChina 与易班 OAuth 2.0 客户端、档案与 
 | `org.pac4j.oauth.profile.yiban` | `YibanProfile`、creator、definition |
 | `org.pac4j.scribe.builder.api` | `BaiduApi20`、`OschinaApi20`、`YibanApi20` |
 | `org.pac4j.scribe.model` / `.service` / `.extractors` | `YibanToken`、`YibanService`、`YibanJsonExtractor` |
+| `org.pac4j.util` | `MyCommonHelper` |
 
 <a id="5-installation"></a>
 ## 5. 引入依赖
@@ -125,7 +132,7 @@ Maven：
 Gradle：
 
 ```groovy
-implementation 'io.github.easy4j:pac4j-oauth-extension:3.0.x.x.20260630-SNAPSHOT'
+implementation 'io.github.easy4j:pac4j-oauth-extension:3.0.x.20260630-SNAPSHOT'
 ```
 
 快照版本需要启用对应快照仓库（`pom.xml` 中 `distributionManagement` 指向 Aliyun Maven 仓库）。
@@ -134,15 +141,16 @@ implementation 'io.github.easy4j:pac4j-oauth-extension:3.0.x.x.20260630-SNAPSHOT
 ## 6. 快速开始
 
 ```java
-// 易班（腾讯）OAuth 2.0 客户端
-YibanClient client = new YibanClient("your-api-key", "your-secret-key");
+// 百度 OAuth 2.0 客户端
+BaiduClient client = new BaiduClient("your-api-key", "your-secret-key");
 client.setCallbackUrl("http://localhost:8080/callback");
-client.addScope(YibanClient.YibanScope.SNSAPI_BASE);
+client.addScope(BaiduClient.BaiduScope.SNSAPI_BASE);
+client.addScope(BaiduClient.BaiduScope.SNSAPI_USERINFO);
 ```
 
 将客户端注册到 pac4j `Config`（如 `new Config("http://localhost:8080/callback", client)`）。
 
-**预期结果**：访问授权 URL 后重定向至易班授权页；回调后 pac4j 基于服务商 JSON 响应（fastjson 解析）产出 `YibanProfile`。
+**预期结果**：访问授权 URL 后重定向至百度授权页（携带所请求的 scope）；回调后 pac4j 产出 `BaiduProfile`，包含用户昵称、头像及（依 scope）个人信息。
 
 <a id="7-configuration"></a>
 ## 7. 配置
@@ -157,16 +165,14 @@ client.addScope(YibanClient.YibanScope.SNSAPI_BASE);
 <a id="8-core-usage"></a>
 ## 8. 核心用法
 
-### 8.1 百度档案数据
+### 8.1 易班档案数据
 
 ```java
-BaiduClient client = new BaiduClient("your-api-key", "your-secret-key");
+YibanClient client = new YibanClient("your-api-key", "your-secret-key");
 client.setCallbackUrl("http://localhost:8080/callback");
-client.addScope(BaiduClient.BaiduScope.SNSAPI_USERINFO);
 
-// 认证完成后：
-BaiduProfile profile = (BaiduProfile) profiles.get(0);   // 来自 pac4j 流程
-String displayName = profile.getDisplayName();
+// 认证完成后，档案携带服务商数据：
+YibanProfile profile = (YibanProfile) profiles.get(0); // 来自 pac4j 流程
 ```
 
 ### 8.2 带 scope 的 OSChina 客户端
@@ -174,7 +180,7 @@ String displayName = profile.getDisplayName();
 ```java
 OschinaClient client = new OschinaClient("your-api-key", "your-secret-key");
 client.setCallbackUrl("http://localhost:8080/callback");
-client.addScope(OschinaClient.OschinaScope.SNSAPI_LOGIN);
+client.addScope(OschinaClient.OschinaScope.SNSAPI_USERINFO);
 ```
 
 <a id="9-testing--build"></a>
@@ -193,9 +199,9 @@ mvn clean verify
 
 | 分支 | 版本模式 | JDK | 维护策略 |
 |---|---|---|---|
-| `feature/1.0.x`（当前分支） | `1.0.x.*` | 8 | 仅接受兼容性修复与 JDK 8 安全的依赖升级 |
+| `feature/1.0.x` | `1.0.x.*` | 8 | 仅接受兼容性修复与 JDK 8 安全的依赖升级 |
 | `feature/2.0.x` | `2.0.x.*` | 17 | JDK 17 线 |
-| `feature/3.0.x` | `3.0.x.*` | 21 | JDK 21 线 |
+| `feature/3.0.x`（当前分支） | `3.0.x.*` | 21 | JDK 21 线 |
 
 <a id="11-contributing--license"></a>
 ## 11. 贡献与许可证

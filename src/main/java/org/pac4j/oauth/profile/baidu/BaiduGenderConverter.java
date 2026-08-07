@@ -11,7 +11,7 @@ public class BaiduGenderConverter extends AbstractAttributeConverter {
 
     @Override
     protected Gender internalConvert(final Object attribute) {
-    	// for baidu: 用户性别, 性别。"1"表示男，"0"表示女 
+	// for baidu: 用户性别, 性别。"1"表示男，"0"表示女
         if (attribute instanceof String) {
             final String s = ((String) attribute).toLowerCase();
             if ("1".equals(s) ||"m".equals(s) || "male".equals(s)) {

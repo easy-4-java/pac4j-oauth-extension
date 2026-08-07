@@ -12,7 +12,7 @@ import com.github.scribejava.core.model.Token;
 /**
  * http://developer.baidu.com/wiki/index.php?title=docs/oauth/rest/file_data_apis_list
  */
-public class BaiduProfileDefinition extends OAuthProfileDefinition<BaiduProfile, Token, OAuthConfiguration>  {
+public class BaiduProfileDefinition extends OAuthProfileDefinition  {
 
 	public static final String PROFILE_URL = "https://openapi.baidu.com/rest/2.0/passport/users/getInfo?access_token=%s";
 
@@ -29,7 +29,7 @@ public class BaiduProfileDefinition extends OAuthProfileDefinition<BaiduProfile,
      */
     public static final String PORTRAIT = "portrait";
     public static final String PORTRAIT_SMALL = "portrait_small_url";
- 	public static final String PORTRAIT_LARGE = "portrait_large_url";
+	public static final String PORTRAIT_LARGE = "portrait_large_url";
     public static final String PORTRAIT_SMALL_URL = "https://tb.himg.baidu.com/sys/portraitn/item/%s";
     public static final String PORTRAIT_LARGE_URL = "https://tb.himg.baidu.com/sys/portrait/item/%s";
 
@@ -55,7 +55,7 @@ public class BaiduProfileDefinition extends OAuthProfileDefinition<BaiduProfile,
     public static final String JOB = "job";
 
     public BaiduProfileDefinition() {
-    	primary(USER_ID, Converters.STRING);
+	primary(USER_ID, Converters.STRING);
         primary(USER_NAME, Converters.STRING);
         primary(REAL_NAME, Converters.STRING);
         primary(PORTRAIT, Converters.STRING);
@@ -105,11 +105,11 @@ public class BaiduProfileDefinition extends OAuthProfileDefinition<BaiduProfile,
 		final BaiduProfile profile = new BaiduProfile();
         JsonNode json = JsonHelper.getFirstNode(body);
         if (json != null && JsonHelper.getElement(json, "error_code") == null) {
-        	// 当前登录用户的数字ID
+	// 当前登录用户的数字ID
             profile.setId(JsonHelper.getElement(json, USER_ID).toString());
             // 主要属性
-            for (final String attribute : getPrimaryAttributes()) {
-				convertAndAdd(profile, AttributeLocation.PROFILE_ATTRIBUTE, attribute, JsonHelper.getElement(json, attribute));
+            for (final Object attribute : getPrimaryAttributes()) {
+				convertAndAdd(profile, AttributeLocation.PROFILE_ATTRIBUTE, attribute.toString(), JsonHelper.getElement(json, attribute.toString()));
 			}
             // 次要属性
             convertAndAdd(profile, AttributeLocation.PROFILE_ATTRIBUTE, PORTRAIT_SMALL, String.format(PORTRAIT_SMALL_URL, JsonHelper.getElement(json, PORTRAIT).toString()) );

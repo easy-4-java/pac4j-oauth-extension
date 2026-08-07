@@ -1,6 +1,7 @@
 package org.pac4j.oauth.profile.oschina;
 
 import org.pac4j.core.profile.AttributeLocation;
+import org.pac4j.core.profile.ProfileHelper;
 import org.pac4j.core.profile.converter.Converters;
 import org.pac4j.oauth.config.OAuthConfiguration;
 import org.pac4j.oauth.profile.JsonHelper;
@@ -12,7 +13,7 @@ import com.github.scribejava.core.model.Token;
 /**
  * http://www.oschina.net/openapi/docs/openapi_user
  */
-public class OschinaProfileDefinition extends OAuthProfileDefinition<OschinaProfile, Token, OAuthConfiguration> {
+public class OschinaProfileDefinition extends OAuthProfileDefinition {
 
 	public static final String PROFILE_URL = "https://www.oschina.net/action/openapi/user?access_token=%s";
     public static final String ID = "id";
@@ -24,7 +25,7 @@ public class OschinaProfileDefinition extends OAuthProfileDefinition<OschinaProf
     public static final String URL = "url";
 
     public OschinaProfileDefinition() {
-    	super();
+	super();
         primary(ID, Converters.STRING);
         primary(NAME, Converters.STRING);
         primary(EMAIL, Converters.STRING);
@@ -61,9 +62,9 @@ public class OschinaProfileDefinition extends OAuthProfileDefinition<OschinaProf
         final OschinaProfile profile = new OschinaProfile();
         JsonNode json = JsonHelper.getFirstNode(body);
         if (json != null && JsonHelper.getElement(json, "error") == null) {
-            profile.setId(JsonHelper.getElement(json, "id").toString());
-            for (final String attribute : getPrimaryAttributes()) {
-				convertAndAdd(profile, AttributeLocation.PROFILE_ATTRIBUTE, attribute, JsonHelper.getElement(json, attribute));
+            profile.setId(JsonHelper.getElement(json, ID).toString());
+            for (final Object attribute : getPrimaryAttributes()) {
+				convertAndAdd(profile, AttributeLocation.PROFILE_ATTRIBUTE, attribute.toString(), JsonHelper.getElement(json, attribute.toString()));
 			}
         } else {
             raiseProfileExtractionJsonError(body);

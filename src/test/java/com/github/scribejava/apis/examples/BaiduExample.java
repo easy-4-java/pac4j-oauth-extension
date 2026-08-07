@@ -14,5 +14,5 @@ public class BaiduExample {
 				.responseType("code").build(BaiduApi20.instance());
 		System.out.println(oschina.getAuthorizationUrl());
 	}
-	
+
 }

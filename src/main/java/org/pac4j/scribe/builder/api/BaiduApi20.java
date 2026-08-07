@@ -10,7 +10,7 @@ import com.github.scribejava.core.model.Verb;
  * http://developer.baidu.com/wiki/index.php?title=docs/oauth/authorization
  */
 public class BaiduApi20 extends DefaultApi20 {
-		
+
 	public static final String AUTHORIZE_URL = "http://openapi.baidu.com/oauth/2.0/authorize";
 	public static final String ACCESS_TOKEN_URL = "https://openapi.baidu.com/oauth/2.0/token";
 
@@ -44,5 +44,5 @@ public class BaiduApi20 extends DefaultApi20 {
 	public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
 		return OAuth2AccessTokenExtractor.instance();
 	}
-  
+
 }
