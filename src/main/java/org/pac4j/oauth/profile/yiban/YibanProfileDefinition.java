@@ -34,7 +34,7 @@ import com.github.scribejava.core.model.Token;
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  */
-public class YibanProfileDefinition extends OAuthProfileDefinition<YibanProfile, Token, OAuthConfiguration> {
+public class YibanProfileDefinition extends OAuthProfileDefinition {
 
     public static final String PROFILE_ME_URL = "https://openapi.yiban.cn/user/me?access_token=%s";
 
@@ -235,9 +235,9 @@ public class YibanProfileDefinition extends OAuthProfileDefinition<YibanProfile,
         final YibanProfile profile = new YibanProfile();
         final JsonNode json = JsonHelper.getFirstNode(body);
         if (json != null) {
-            profile.setId(ProfileHelper.sanitizeIdentifier(profile, JsonHelper.getElement(json, ID)));
-            for (final String attribute : getPrimaryAttributes()) {
-                convertAndAdd(profile, PROFILE_ATTRIBUTE, attribute, JsonHelper.getElement(json, attribute));
+            profile.setId(JsonHelper.getElement(json, ID).toString());
+            for (final Object attribute : getPrimaryAttributes()) {
+                convertAndAdd(profile, PROFILE_ATTRIBUTE, attribute.toString(), JsonHelper.getElement(json, attribute.toString()));
             }
         } else {
             raiseProfileExtractionJsonError(body);
