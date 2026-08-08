@@ -21,9 +21,21 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import org.pac4j.util.MyCommonHelper;
 
 /**
- * Yiban token extra.
- * <p>More info at: <a href="https://open.yiban.cn/wiki/index.php?page=oauth/access_token"> access_token</a></p>
+ * Extended {@link OAuth2AccessToken} that carries the YiBan-specific
+ * {@code userid} field returned alongside the access token.
+ *
+ * <p>YiBan embeds the authenticated user's identifier inside the token
+ * response rather than in the user-info payload. This class captures that
+ * value so that {@link org.pac4j.oauth.profile.yiban.YibanProfileCreator}
+ * can copy it onto the resulting profile.</p>
+ *
+ * <p>More info at:
+ * <a href="https://open.yiban.cn/wiki/index.php?page=oauth/access_token">YiBan access_token</a>.</p>
+ *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see OAuth2AccessToken
+ * @see org.pac4j.scribe.extractors.YibanJsonExtractor
  */
 public class YibanToken extends OAuth2AccessToken {
 
@@ -31,6 +43,18 @@ public class YibanToken extends OAuth2AccessToken {
     private String userid;
     private Integer expires;
 
+    /**
+     * Constructs a new YiBan token with all standard OAuth 2.0 fields plus
+     * the YiBan-specific user identifier.
+     *
+     * @param accessToken  the access token string; must not be {@code null}.
+     * @param tokenType    the token type (e.g. {@code "bearer"}).
+     * @param expiresIn    the token lifetime in seconds; may be {@code null}.
+     * @param refreshToken the refresh token; may be {@code null}.
+     * @param scope        the granted scope; may be {@code null}.
+     * @param rawResponse  the raw HTTP response body.
+     * @param userid       the YiBan user identifier; must not be {@code null}.
+     */
     public YibanToken(String accessToken, String tokenType, Integer expiresIn,
                        String refreshToken, String scope, String rawResponse,
                        String userid) {
@@ -39,18 +63,38 @@ public class YibanToken extends OAuth2AccessToken {
         this.expires = expiresIn;
     }
 
+    /**
+     * Returns the YiBan user identifier associated with this token.
+     *
+     * @return the user ID string; never {@code null} for properly-issued tokens.
+     */
     public String getUserid() {
 		return userid;
 	}
 
+	/**
+	 * Replaces the YiBan user identifier.
+	 *
+	 * @param userid the new user ID; must not be {@code null}.
+	 */
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
+	/**
+	 * Returns the token expiry duration in seconds.
+	 *
+	 * @return the expiry value, or {@code null} if not provided.
+	 */
 	public Integer getExpires() {
 		return expires;
 	}
 
+	/**
+	 * Replaces the token expiry duration.
+	 *
+	 * @param expires the new expiry value in seconds; may be {@code null}.
+	 */
 	public void setExpires(Integer expires) {
 		this.expires = expires;
 	}
