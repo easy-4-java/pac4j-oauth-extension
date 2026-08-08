@@ -22,14 +22,27 @@ import com.github.scribejava.core.extractors.OAuth2AccessTokenJsonExtractor;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 /**
- * TODO
+ * Specialised {@link OAuth2AccessTokenJsonExtractor} that parses the YiBan
+ * token response and extracts the {@code userid} field into a
+ * {@link YibanToken}.
+ *
+ * <p>YiBan's token response includes a {@code userid} field that identifies
+ * the authenticated user; this value is not part of the standard OAuth 2.0
+ * token schema, so a custom extractor is required.</p>
+ *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see OAuth2AccessTokenJsonExtractor
+ * @see YibanToken
  */
 public class YibanJsonExtractor extends OAuth2AccessTokenJsonExtractor {
 
 	private static final String USERID_REGEX_PATTERN = "userid";
     private static final String EXPIRES_REGEX_PATTERN = "expires";
 
+    /**
+     * Protected constructor; use {@link #instance()} to obtain the singleton.
+     */
     protected YibanJsonExtractor() {
     }
 
@@ -38,11 +51,29 @@ public class YibanJsonExtractor extends OAuth2AccessTokenJsonExtractor {
         private static final YibanJsonExtractor INSTANCE = new YibanJsonExtractor();
     }
 
+    /**
+     * Returns the lazily-initialised singleton instance.
+     *
+     * @return the shared {@link YibanJsonExtractor} instance; never {@code null}.
+     */
     public static YibanJsonExtractor instance() {
         return YibanJsonExtractor.InstanceHolder.INSTANCE;
     }
 
-
+    /**
+     * Creates a {@link YibanToken} from the parsed JSON response, extracting
+     * the {@code userid} and {@code expires} fields in addition to the standard
+     * OAuth 2.0 token attributes.
+     *
+     * @param accessToken  the access token string.
+     * @param tokenType    the token type (e.g. {@code "bearer"}).
+     * @param expiresIn    the token lifetime in seconds; may be {@code null}.
+     * @param refreshToken the refresh token; may be {@code null}.
+     * @param scope        the granted scope; may be {@code null}.
+     * @param response     the parsed JSON response node.
+     * @param rawResponse  the raw HTTP response body.
+     * @return a {@link YibanToken} populated with the YiBan-specific fields.
+     */
     @Override
     protected OAuth2AccessToken createToken(String accessToken, String tokenType, Integer expiresIn,
 		String refreshToken, String scope, JsonNode response, String rawResponse) {
