@@ -31,10 +31,18 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
 /**
- * As of scribejava 5.3, the enumeration class ClientAuthenticationType does not support inheritance,
- * and can not complete the client authentication of Yiban.
+ * Custom {@link OAuth20Service} for YiBan that injects {@code appid} and
+ * {@code secret} request-body parameters into every OAuth request.
+ *
+ * <p>As of ScribeJava 5.3, the {@code ClientAuthenticationType} enum does
+ * not support subclassing, making it impossible to implement YiBan's bespoke
+ * client authentication through the standard extension mechanism. This service
+ * works around that limitation by intercepting the {@code execute} methods.</p>
  *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see OAuth20Service
+ * @see org.pac4j.scribe.builder.api.YibanApi20
  */
 public class YibanService extends OAuth20Service {
 
@@ -42,19 +50,18 @@ public class YibanService extends OAuth20Service {
     private final String apiSecrect;
 
     /**
-     * Default constructor
+     * Constructs a new YiBan OAuth service.
      *
-     * @param api    OAuth2.0 api information
-     * @param apiKey the API key
-     * @param apiSecret the API secret
-     * @param callback the callback URL
-     * @param scope the scope
-     * @param responseType the response type
-     * @param debugStream the debug Stream
-     * @param userAgent the user agent
-     * @param httpClientConfig the HTTP client configuration
-     * @param httpClient  the HTTP client
-     *
+     * @param api              the YiBan API descriptor.
+     * @param apiKey           the YiBan application identifier ({@code appid}).
+     * @param apiSecret        the YiBan application secret.
+     * @param callback         the redirect URI registered with YiBan.
+     * @param scope            the requested OAuth scope; may be {@code null}.
+     * @param responseType     the OAuth response type (typically {@code "code"}).
+     * @param debugStream      the debug output stream; may be {@code null}.
+     * @param userAgent        the HTTP user-agent header value; may be {@code null}.
+     * @param httpClientConfig the HTTP client configuration; may be {@code null}.
+     * @param httpClient       the HTTP client implementation; may be {@code null}.
      */
     public YibanService(DefaultApi20 api, String apiKey, String apiSecret, String callback, String scope,
             String responseType, OutputStream debugStream, String userAgent, HttpClientConfig httpClientConfig,
@@ -64,6 +71,16 @@ public class YibanService extends OAuth20Service {
         this.apiSecrect = apiSecret;
     }
 
+    /**
+     * Executes an asynchronous OAuth request after injecting YiBan client
+     * authentication parameters.
+     *
+     * @param request   the OAuth request to execute.
+     * @param callback  the asynchronous callback; may be {@code null}.
+     * @param converter the response converter.
+     * @param <R>       the expected response type.
+     * @return a {@link Future} wrapping the converted response.
+     */
     @Override
     public <R> Future<R> execute(OAuthRequest request, OAuthAsyncRequestCallback<R> callback,
                                  OAuthRequest.ResponseConverter<R> converter) {
@@ -71,6 +88,16 @@ public class YibanService extends OAuth20Service {
         return super.execute(authRequest, callback, converter);
     }
 
+    /**
+     * Executes a synchronous OAuth request after injecting YiBan client
+     * authentication parameters.
+     *
+     * @param request the OAuth request to execute.
+     * @return the HTTP response; never {@code null}.
+     * @throws InterruptedException  if the calling thread is interrupted.
+     * @throws ExecutionException    if the request execution fails.
+     * @throws IOException           if an I/O error occurs.
+     */
     @Override
     public Response execute(OAuthRequest request)
         throws InterruptedException, ExecutionException, IOException {
@@ -78,6 +105,13 @@ public class YibanService extends OAuth20Service {
         return super.execute(authRequest);
     }
 
+    /**
+     * Adds the YiBan-specific {@code appid} and {@code secret} parameters to
+     * the request body.
+     *
+     * @param request the OAuth request to augment.
+     * @return the same request instance, with client-auth parameters added.
+     */
     private OAuthRequest addClientAuthentication(OAuthRequest request) {
         request.addParameter(YibanApi20.APPID, this.apiKey);
         request.addParameter(YibanApi20.SECRET, this.apiSecrect);

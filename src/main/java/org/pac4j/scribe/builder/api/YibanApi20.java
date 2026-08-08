@@ -36,16 +36,30 @@ import com.github.scribejava.core.oauth2.clientauthentication.RequestBodyAuthent
 
 
 /**
- * This class represents the OAuth API implementation for Yiban using OAuth protocol version 2.
- * It could be part of the Scribe library.
- * <p>More info at: <a href=
- * "https://open.yiban.cn/wiki/index.php?page=%E6%98%93%E7%8F%ADapi#1"
- * >OAuth2.0</a></p>
+ * ScribeJava {@link DefaultApi20} implementation for the YiBan (易班) OAuth 2.0
+ * authorization server.
+ *
+ * <p>Unlike standard OAuth 2.0 providers, YiBan uses a custom
+ * {@code appid}/{@code secret} parameter pair in the request body instead of
+ * the conventional {@code client_id}/{@code client_secret} header. The
+ * {@link #getAuthorizationUrl} method rewrites the query parameter accordingly,
+ * and {@link #createService} returns a {@link YibanService} that injects the
+ * credentials into every request.</p>
+ *
+ * <p>More info at:
+ * <a href="https://open.yiban.cn/wiki/index.php?page=%E6%98%93%E7%8F%ADapi#1">YiBan OAuth 2.0</a>.</p>
+ *
  * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 3.0.0
+ * @see DefaultApi20
+ * @see YibanService
+ * @see org.pac4j.oauth.client.YibanClient
  */
 public class YibanApi20 extends DefaultApi20 {
 
+    /** Query-parameter name for the YiBan application identifier. */
     public static final String APPID = "appid";
+    /** Query-parameter name for the YiBan application secret. */
     public static final String SECRET = "secret";
 
     // https://open.yiban.cn/wiki/index.php?page=oauth/authorize
@@ -55,6 +69,9 @@ public class YibanApi20 extends DefaultApi20 {
     // https://open.yiban.cn/wiki/index.php?page=oauth/access_token
     private static final String ACCESS_TOKEN_ENDPOINT = "https://openapi.yiban.cn/oauth/access_token";
 
+    /**
+     * Protected constructor; use {@link #instance()} to obtain the singleton.
+     */
     protected YibanApi20() {
 	}
 
@@ -62,25 +79,57 @@ public class YibanApi20 extends DefaultApi20 {
         private static final YibanApi20 INSTANCE = new YibanApi20();
     }
 
+    /**
+     * Returns the lazily-initialised singleton instance.
+     *
+     * @return the shared {@link YibanApi20} instance; never {@code null}.
+     */
     public static YibanApi20 instance() {
         return YibanApi20.InstanceHolder.INSTANCE;
     }
 
+    /**
+     * Returns the YiBan access-token endpoint URL.
+     *
+     * @return the access-token URL; never {@code null}.
+     */
     @Override
     public String getAccessTokenEndpoint() {
         return ACCESS_TOKEN_ENDPOINT;
     }
 
+    /**
+     * Returns the YiBan refresh-token endpoint URL.
+     *
+     * @return the refresh-token URL; never {@code null}.
+     */
     @Override
     public String getRefreshTokenEndpoint() {
         return REFRESH_TOKEN_ENDPOINT;
     }
 
+    /**
+     * Returns the YiBan authorization base URL.
+     *
+     * @return the authorization URL; never {@code null}.
+     */
     @Override
     protected String getAuthorizationBaseUrl() {
         return AUTHORIZE_ENDPOINT;
     }
 
+    /**
+     * Builds the full YiBan authorization URL, replacing the standard
+     * {@code client_id} parameter with YiBan's {@code appid} equivalent.
+     *
+     * @param responseType      the OAuth response type (typically {@code "code"}).
+     * @param apiKey            the YiBan application identifier.
+     * @param callback          the redirect URI registered with YiBan.
+     * @param scope             the requested OAuth scope; may be {@code null}.
+     * @param state             the CSRF-prevention state token; may be {@code null}.
+     * @param additionalParams  extra query parameters; may be empty.
+     * @return the fully-qualified YiBan authorization URL.
+     */
     @Override
     public String getAuthorizationUrl(String responseType, String apiKey, String callback, String scope, String state,
             Map<String, String> additionalParams) {
@@ -95,11 +144,32 @@ public class YibanApi20 extends DefaultApi20 {
         return authorizationUrl;
     }
 
+    /**
+     * Returns the YiBan-specific JSON token extractor that also parses the
+     * {@code userid} field from the token response.
+     *
+     * @return the {@link YibanJsonExtractor} instance; never {@code null}.
+     */
     @Override
     public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
         return YibanJsonExtractor.instance();
     }
 
+    /**
+     * Creates a {@link YibanService} that injects {@code appid}/{@code secret}
+     * request-body parameters for client authentication.
+     *
+     * @param apiKey             the YiBan application identifier.
+     * @param apiSecret          the YiBan application secret.
+     * @param callback           the redirect URI.
+     * @param defaultScope       the default OAuth scope; may be {@code null}.
+     * @param responseType       the OAuth response type.
+     * @param debugStream        the debug output stream; may be {@code null}.
+     * @param userAgent          the HTTP user-agent header value; may be {@code null}.
+     * @param httpClientConfig   the HTTP client configuration; may be {@code null}.
+     * @param httpClient         the HTTP client implementation; may be {@code null}.
+     * @return a new {@link YibanService} instance; never {@code null}.
+     */
 	@Override
 	public OAuth20Service createService(String apiKey, String apiSecret, String callback, String defaultScope,
 			String responseType, OutputStream debugStream, String userAgent, HttpClientConfig httpClientConfig,
@@ -108,11 +178,22 @@ public class YibanApi20 extends DefaultApi20 {
 				 debugStream, userAgent, httpClientConfig, httpClient);
 	}
 
+    /**
+     * YiBan passes the bearer token as a URI query parameter.
+     *
+     * @return the {@link BearerSignatureURIQueryParameter} instance.
+     */
     @Override
     public BearerSignature getBearerSignature() {
         return BearerSignatureURIQueryParameter.instance();
     }
 
+    /**
+     * YiBan authenticates the client via request-body parameters rather than
+     * HTTP headers.
+     *
+     * @return the {@link RequestBodyAuthenticationScheme} instance.
+     */
     @Override
     public ClientAuthentication getClientAuthentication() {
         return RequestBodyAuthenticationScheme.instance();
