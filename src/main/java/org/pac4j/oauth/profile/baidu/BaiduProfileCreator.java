@@ -29,7 +29,7 @@ import org.pac4j.oauth.profile.creator.OAuth20ProfileCreator;
  * configuration wiring in {@link org.pac4j.oauth.client.BaiduClient} can
  * reference a strongly-typed creator that returns {@link BaiduProfile}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20ProfileCreator
  * @see BaiduProfile

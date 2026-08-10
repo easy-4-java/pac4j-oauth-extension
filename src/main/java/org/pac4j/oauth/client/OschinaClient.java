@@ -33,7 +33,7 @@ import org.pac4j.scribe.builder.api.OschinaApi20;
  *
  * <p>More info at: <a href="http://www.oschina.net/openapi/docs/openapi_user">OSChina OpenAPI docs</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see org.pac4j.oauth.client.OAuth20Client
  * @see org.pac4j.oauth.profile.oschina.OschinaProfile

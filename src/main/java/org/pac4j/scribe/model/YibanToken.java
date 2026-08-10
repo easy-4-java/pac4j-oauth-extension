@@ -32,7 +32,7 @@ import org.pac4j.util.MyCommonHelper;
  * <p>More info at:
  * <a href="https://open.yiban.cn/wiki/index.php?page=oauth/access_token">YiBan access_token</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth2AccessToken
  * @see org.pac4j.scribe.extractors.YibanJsonExtractor

@@ -32,7 +32,7 @@ import org.pac4j.oauth.profile.creator.OAuth20ProfileCreator;
  * difference is the query-string injection performed in
  * {@link #signRequest(OAuthService, Token, OAuthRequest)}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20ProfileCreator
  */

@@ -29,7 +29,7 @@ import org.pac4j.core.profile.converter.AbstractAttributeConverter;
  * value types yield {@code null} so that the profile defers the decision
  * upstream.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see AbstractAttributeConverter
  * @see Gender

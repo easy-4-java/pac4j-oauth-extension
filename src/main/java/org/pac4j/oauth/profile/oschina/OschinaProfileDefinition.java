@@ -30,7 +30,7 @@ import com.github.scribejava.core.model.Token;
  *
  * <p>More info at: <a href="http://www.oschina.net/openapi/docs/openapi_user">OSChina OpenAPI user docs</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OschinaProfile
  * @see org.pac4j.oauth.profile.definition.OAuthProfileDefinition
