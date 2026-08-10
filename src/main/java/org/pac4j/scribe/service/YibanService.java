@@ -39,7 +39,7 @@ import com.github.scribejava.core.oauth.OAuth20Service;
  * client authentication through the standard extension mechanism. This service
  * works around that limitation by intercepting the {@code execute} methods.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20Service
  * @see org.pac4j.scribe.builder.api.YibanApi20

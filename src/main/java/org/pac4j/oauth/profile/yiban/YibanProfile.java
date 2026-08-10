@@ -31,7 +31,7 @@ import org.pac4j.oauth.profile.weibo.WeiboProfileDefinition;
  * {@code profile_url} values are prefixed with the YiBan OpenAPI base URL
  * so callers always see an absolute {@link URI}.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20Profile
  * @see YibanProfileDefinition

@@ -8,7 +8,7 @@ package org.pac4j.util;
  * rules so that {@link Object#toString()} overrides in the
  * {@link org.pac4j.scribe.model} package can produce consistent output.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see org.pac4j.scribe.model.YibanToken
  */

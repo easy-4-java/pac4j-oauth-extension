@@ -49,7 +49,7 @@ import com.github.scribejava.core.oauth2.clientauthentication.RequestBodyAuthent
  * <p>More info at:
  * <a href="https://open.yiban.cn/wiki/index.php?page=%E6%98%93%E7%8F%ADapi#1">YiBan OAuth 2.0</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see DefaultApi20
  * @see YibanService

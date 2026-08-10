@@ -34,7 +34,7 @@ import java.util.List;
  *
  * <p>More info at: <a href="http://developer.baidu.com/wiki/index.php?title=docs/oauth/authorization">Baidu OAuth authorization docs</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see org.pac4j.oauth.client.OAuth20Client
  * @see org.pac4j.oauth.profile.baidu.BaiduProfile

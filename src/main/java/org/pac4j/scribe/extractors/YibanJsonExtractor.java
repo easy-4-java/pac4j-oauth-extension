@@ -30,7 +30,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
  * the authenticated user; this value is not part of the standard OAuth 2.0
  * token schema, so a custom extractor is required.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth2AccessTokenJsonExtractor
  * @see YibanToken

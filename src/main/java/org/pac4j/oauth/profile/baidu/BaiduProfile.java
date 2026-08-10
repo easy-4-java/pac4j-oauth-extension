@@ -34,7 +34,7 @@ import org.pac4j.oauth.profile.OAuth20Profile;
  * matches the conventions documented at
  * <a href="http://developer.baidu.com/wiki/index.php?title=docs/oauth/rest/file_data_apis_list">Baidu REST file APIs</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20Profile
  * @see BaiduProfileDefinition

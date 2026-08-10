@@ -35,7 +35,7 @@ import com.github.scribejava.core.model.Token;
  * than in the user-info payload, so the standard pac4j flow has to be
  * subclassed to copy that value across.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20ProfileCreator
  * @see YibanToken

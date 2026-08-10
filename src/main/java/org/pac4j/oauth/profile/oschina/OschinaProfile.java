@@ -30,7 +30,7 @@ import org.pac4j.oauth.profile.OAuth20Profile;
  * display name, login name and first name) because OSChina's profile model
  * is more compact than Baidu's.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see OAuth20Profile
  * @see OschinaProfileDefinition

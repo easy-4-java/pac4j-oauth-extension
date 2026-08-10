@@ -37,7 +37,7 @@ import com.github.scribejava.core.model.Token;
  *
  * <p>More info at: <a href="https://open.yiban.cn/wiki/index.php?page=user/real_me">user/real_me</a>.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 3.0.0
  * @see YibanProfile
  * @see org.pac4j.oauth.profile.definition.OAuthProfileDefinition
