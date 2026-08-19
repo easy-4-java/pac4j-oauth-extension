@@ -73,6 +73,7 @@
         <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <maven-jacoco-plugin.version>0.8.15</maven-jacoco-plugin.version>
         <slf4j.version>2.0.18</slf4j.version>
+    
     </properties>
 
     <dependencyManagement>
