@@ -44,6 +44,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <lombok.version>1.18.46</lombok.version>
+        <junit-jupiter.version>6.1.0</junit-jupiter.version>
         <pac4j.version>6.1.0</pac4j.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         
@@ -141,6 +142,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <distributionManagement>
